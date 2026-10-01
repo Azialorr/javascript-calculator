@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>JavaScript Calculator</title>
+</head>
+<body>
+<h1>JavaScript Calculator</h1>
+<script>
+
+  let previous = 0
+  let operation = ""
+
+  function appendNumber(num) {
+    let current = document.getElementById('display').innerHTML
+    if (current == "0") {
+      current = ""
+    }
+    document.getElementById('display').innerHTML=current+num;
+  }
+
+  function allClear() {
+    previous = 0
+    operation = ""
+    document.getElementById('display').innerHTML = 0
+  }
+
+  function calc() {
+    let current = Number(document.getElementById('display').innerHTML)
+    if (operation == "+") {
+      previous += current
+    }
+    else if (operation == "-") {
+      previous -= current
+    }
+    else if (operation == "*") {
+      previous *= current
+    }
+    else if (operation == "/") {
+      if (current == 0) {
+        alert("Cannot divide by zero!")
+        allClear()
+        return
+      }
+      previous /= current
+    }
+    document.getElementById('display').innerHTML = previous
+  }
+
+  function add() {
+    previous = Number(document.getElementById('display').innerHTML)
+    operation = "+"
+    document.getElementById('display').innerHTML = 0;
+  }
+  function subtract() {
+    previous = Number(document.getElementById('display').innerHTML)
+    operation = "-"
+    document.getElementById('display').innerHTML = 0;
+  }
+  function multiply() {
+    previous = Number(document.getElementById('display').innerHTML)
+    operation = "*"
+    document.getElementById('display').innerHTML = 0;
+  }
+    function divide() {
+    previous = Number(document.getElementById('display').innerHTML)
+    operation = "/"
+    document.getElementById('display').innerHTML = 0;
+  }
+
+  function createKeyboard() {
+    let total = ""
+
+    for (let i = 9; i >= 0; i--) {
+      if (i < 9 && i % 3 == 0) {
+        total += "<br />"
+      }
+      total += '<button onclick="appendNumber(' + i + ')">' + i + "</button>"
+    }
+    total += '<br/><br/><button onclick="add()">+</button>'
+    total += '<button onclick="subtract()">-</button>'
+    total += '<button onclick="multiply()">*</button>'
+    total += '<button onclick="divide()">/</button>'
+    total += '<br/><button onclick="calc()">=</button>'
+    total += '<button onclick="allClear()">C</button>'
+
+    document.getElementById('keyboard').innerHTML = total
+  }
+
+  document.onkeydown = function(event) {
+
+    if (event.key >= "0" && event.key <= "9") {
+      appendNumber(event.key)
+    } else if (event.key == "+") {
+      add()
+    } else if (event.key == "-") {
+      subtract()
+    } else if (event.key == "*") {
+      multiply()
+    } else if (event.key == "/") {
+      divide()
+    } else if (event.key == "=" || event.key == "Enter") {
+      calc()
+    } else if (event.key == "c") {
+      allClear()
+    }
+  }
+
+</script>
+
+<div id="display">0</div>
+
+<div id="keyboard"></div>
+
+<script>
+    createKeyboard()
+</script>
+
+</body>
+</html>
